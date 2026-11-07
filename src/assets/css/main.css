@@ -67,9 +67,33 @@ a { color: inherit; }
   color: var(--paper);
 }
 
-.hero > picture,
+.hero__stage {
+  position: relative;
+  height: 52.01vw;
+}
+
+.hero__stage > picture,
 .hero__logo,
 .hero__note { position: absolute; }
+
+/* Landing: full-screen, collage centered in the viewport */
+.hero--landing {
+  height: 100vh;
+  height: 100svh;
+  min-height: 52.01vw;
+}
+.hero--landing .hero__stage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* Landing note has four links (no CV), spaced to match the Squarespace landing */
+.hero--landing .note-vimeo     { top: 23.24%; }
+.hero--landing .note-instagram { top: 36.19%; }
+.hero--landing .note-linkedin  { top: 51.74%; }
+.hero--landing .note-email     { top: 69.09%; }
 
 /* Positions are each piece's unrotated box; rotation/scale match the Squarespace build. */
 .hero__name-tag { left: 6.17vw;  top: 13.6vw;  width: 15.69vw; z-index: 2; transform: rotate(-17deg); }
@@ -226,6 +250,10 @@ a { color: inherit; }
       url("/assets/img/wood-dark-1280.jpg") type("image/jpeg")
     );
   }
+
+  .hero__stage { height: 129.6vw; }
+  .hero--landing { height: 100vh; height: 100svh; min-height: 129.6vw; }
+  .hero--landing .hero__links a { text-decoration: underline; text-underline-offset: 0.2em; }
 
   .hero__name-tag,
   .hero__fortune,

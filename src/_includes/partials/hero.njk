@@ -1,38 +1,49 @@
+{#-
+  Collage header. Set `heroVariant = "landing"` before including it for the full-screen landing version
+  (collage centered in the viewport, no CV link).
+-#}
 {% from "partials/macros.njk" import picture %}
-<header class="hero">
+{%- set landing = heroVariant == "landing" -%}
+<header class="hero{% if landing %} hero--landing{% endif %}">
   <h1 class="visually-hidden">David Way Jr., motion designer and art director</h1>
 
-  {{ picture("/assets/img/name-tag", "Hello, my name is David Way Jr.", 520, 342, "hero__name-tag", "lazy") }}
-  {{ picture("/assets/img/david", "David Way Jr.", 560, 664, "hero__david") }}
-  {{ picture("/assets/img/fortune", "Motion designer, art director, dog lover", 440, 118, "hero__fortune", "lazy") }}
+  <div class="hero__stage">
+    {{ picture("/assets/img/name-tag", "Hello, my name is David Way Jr.", 520, 342, "hero__name-tag", "lazy") }}
+    {{ picture("/assets/img/david", "David Way Jr.", 560, 664, "hero__david") }}
+    {{ picture("/assets/img/fortune", "Motion designer, art director, dog lover", 440, 118, "hero__fortune", "lazy") }}
 
-  <div class="hero__logo">
-    <img class="hero__logo-loop" data-src="/assets/img/logo-loop.webp" alt="" width="500" height="500" decoding="async">
-    {{ picture("/assets/img/dwj-initials", "DWJ", 800, 891, "hero__logo-paper") }}
+    <div class="hero__logo">
+      <img class="hero__logo-loop" data-src="/assets/img/logo-loop.webp" alt="" width="500" height="500" decoding="async">
+      {{ picture("/assets/img/dwj-initials", "DWJ", 800, 891, "hero__logo-paper") }}
+    </div>
+
+    {#- Desktop: handwritten note -#}
+    <nav class="hero__note" aria-label="Links">
+      {{ picture("/assets/img/paper-note", "", 580, 765, "hero__note-paper", "lazy") }}
+      <ul>
+        {%- if not landing %}
+        <li class="note-cv"><a href="{{ site.links.cv }}">{{ picture("/assets/img/link-cv", "CV", 460, 80, "", "lazy") }}</a></li>
+        {%- endif %}
+        <li class="note-vimeo"><a href="{{ site.links.vimeo }}">{{ picture("/assets/img/link-vimeo", "Vimeo", 460, 75, "", "lazy") }}</a></li>
+        <li class="note-instagram"><a href="{{ site.links.instagram }}">{{ picture("/assets/img/link-instagram", "Instagram", 460, 112, "", "lazy") }}</a></li>
+        <li class="note-linkedin"><a href="{{ site.links.linkedin }}">{{ picture("/assets/img/link-linkedin", "LinkedIn", 460, 109, "", "lazy") }}</a></li>
+        <li class="note-email"><a href="{{ site.links.email }}">{{ picture("/assets/img/link-email", "Email", 460, 80, "", "lazy") }}</a></li>
+      </ul>
+    </nav>
+
+    {#- Mobile: plain text links -#}
+    <nav class="hero__links" aria-label="Links">
+      <ul>
+        {%- if not landing %}
+        <li><a href="{{ site.links.cv }}">CV</a></li>
+        {%- endif %}
+        <li><a href="{{ site.links.vimeo }}">Vimeo</a></li>
+        <li><a href="{{ site.links.instagram }}">Instagram</a></li>
+      </ul>
+      <ul>
+        <li><a href="{{ site.links.linkedin }}">LinkedIn</a></li>
+        <li><a href="{{ site.links.email }}">Email</a></li>
+      </ul>
+    </nav>
   </div>
-
-  {#- Desktop: handwritten note -#}
-  <nav class="hero__note" aria-label="Links">
-    {{ picture("/assets/img/paper-note", "", 580, 765, "hero__note-paper", "lazy") }}
-    <ul>
-      <li class="note-cv"><a href="{{ site.links.cv }}">{{ picture("/assets/img/link-cv", "CV", 460, 80, "", "lazy") }}</a></li>
-      <li class="note-vimeo"><a href="{{ site.links.vimeo }}">{{ picture("/assets/img/link-vimeo", "Vimeo", 460, 75, "", "lazy") }}</a></li>
-      <li class="note-instagram"><a href="{{ site.links.instagram }}">{{ picture("/assets/img/link-instagram", "Instagram", 460, 112, "", "lazy") }}</a></li>
-      <li class="note-linkedin"><a href="{{ site.links.linkedin }}">{{ picture("/assets/img/link-linkedin", "LinkedIn", 460, 109, "", "lazy") }}</a></li>
-      <li class="note-email"><a href="{{ site.links.email }}">{{ picture("/assets/img/link-email", "Email", 460, 80, "", "lazy") }}</a></li>
-    </ul>
-  </nav>
-
-  {#- Mobile: plain text links -#}
-  <nav class="hero__links" aria-label="Links">
-    <ul>
-      <li><a href="{{ site.links.cv }}">CV</a></li>
-      <li><a href="{{ site.links.vimeo }}">Vimeo</a></li>
-      <li><a href="{{ site.links.instagram }}">Instagram</a></li>
-    </ul>
-    <ul>
-      <li><a href="{{ site.links.linkedin }}">LinkedIn</a></li>
-      <li><a href="{{ site.links.email }}">Email</a></li>
-    </ul>
-  </nav>
 </header>
