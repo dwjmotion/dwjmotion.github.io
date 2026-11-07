@@ -1,0 +1,21 @@
+{% from "partials/macros.njk" import video, media with context %}
+{%- set p = project.data -%}
+<section class="project" id="{{ project.fileSlug }}"
+  {%- if p.background %} style="--bg-avif: url('/assets/img/{{ p.background }}-2560.avif'); --bg-webp: url('/assets/img/{{ p.background }}-2560.webp'); --bg-jpg: url('/assets/img/{{ p.background }}-2560.jpg'); --bg-avif-sm: url('/assets/img/{{ p.background }}-1280.avif'); --bg-webp-sm: url('/assets/img/{{ p.background }}-1280.webp'); --bg-jpg-sm: url('/assets/img/{{ p.background }}-1280.jpg'){% if p.backgroundPosition %}; --bg-position: {{ p.backgroundPosition }}{% endif %}"{% endif %}
+  aria-labelledby="{{ project.fileSlug }}-title">
+  <div class="project__main">
+    {{ video(p.videoId, p.client + " – " + p.title) }}
+    <div class="project__heading">
+      <h2 class="project__title" id="{{ project.fileSlug }}-title">{{ p.client }}<br>{{ p.title }}</h2>
+      <p class="project__tags">
+        {%- if p.agency %}{{ p.agency }}<br>{% endif %}{{ p.role }}
+      </p>
+    </div>
+    <div class="project__description">{{ project.content | safe }}</div>
+  </div>
+  <div class="project__aside">
+    {{ media(p.stills[0], "337 / 190", "project__still", "Still") }}
+    {{ media(p.stills[1], "337 / 190", "project__still", "Still") }}
+    {{ media(p.caseStudy, "266 / 236", "project__case-study", "Case study") }}
+  </div>
+</section>

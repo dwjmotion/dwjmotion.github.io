@@ -1,0 +1,50 @@
+{#- Image with AVIF + WebP sources. `src` is the path without extension. -#}
+{% macro picture(src, alt, width, height, class="", loading="eager") %}
+<picture{% if class %} class="{{ class }}"{% endif %}>
+  <source srcset="{{ src }}.avif" type="image/avif">
+  <img src="{{ src }}.webp" alt="{{ alt }}" width="{{ width }}" height="{{ height }}" loading="{{ loading }}" decoding="async">
+</picture>
+{% endmacro %}
+
+{#-
+  Video player. Until a Bunny video ID is set, shows a color-block placeholder.
+  With an ID: loops Bunny's muted preview with a play button; clicking loads the full player.
+  Bunny library ID and CDN hostname live in src/_data/site.json.
+-#}
+{% macro video(id, title, ratio="16 / 9") %}
+{% if id and site.bunny.libraryId and site.bunny.cdnHost %}
+<div class="video" style="aspect-ratio: {{ ratio }}" data-video data-library="{{ site.bunny.libraryId }}" data-id="{{ id }}" data-title="{{ title }}">
+  <video class="video__preview" muted loop playsinline preload="none" poster="https://{{ site.bunny.cdnHost }}/{{ id }}/thumbnail.jpg" aria-hidden="true">
+    <source src="https://{{ site.bunny.cdnHost }}/{{ id }}/preview_hq.webm" type="video/webm">
+    <source src="https://{{ site.bunny.cdnHost }}/{{ id }}/preview_hq.mp4" type="video/mp4">
+  </video>
+  <button class="video__play" type="button" aria-label="Play video: {{ title }}">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+  </button>
+</div>
+{% else %}
+<div class="video placeholder" style="aspect-ratio: {{ ratio }}" role="img" aria-label="Video coming soon: {{ title }}"></div>
+{% endif %}
+{% endmacro %}
+
+{#-
+  Supporting media (stills, case study). `item` is { src, type: "image" | "loop", alt }.
+  Empty → color-block placeholder at the given ratio.
+-#}
+{% macro media(item, ratio, class, label) %}
+{% if item and item.src %}
+  {% if item.type == "loop" %}
+<video class="media {{ class }}" style="aspect-ratio: {{ ratio }}" autoplay muted loop playsinline preload="metadata" aria-label="{{ item.alt }}">
+  <source src="{{ item.src }}.webm" type="video/webm">
+  <source src="{{ item.src }}.mp4" type="video/mp4">
+</video>
+  {% else %}
+<picture class="media {{ class }}" style="aspect-ratio: {{ ratio }}">
+  <source srcset="{{ item.src }}.avif" type="image/avif">
+  <img src="{{ item.src }}.webp" alt="{{ item.alt }}" loading="lazy" decoding="async">
+</picture>
+  {% endif %}
+{% else %}
+<div class="media placeholder {{ class }}" style="aspect-ratio: {{ ratio }}" role="img" aria-label="{{ label }} coming soon"></div>
+{% endif %}
+{% endmacro %}

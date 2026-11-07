@@ -1,0 +1,9 @@
+---
+layout: layouts/base.njk
+---
+{% include "partials/hero.njk" %}
+<main>
+  {%- for project in collections.projects %}
+  {% include "partials/project-block.njk" %}
+  {%- endfor %}
+</main>

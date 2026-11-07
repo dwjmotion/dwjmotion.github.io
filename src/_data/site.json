@@ -1,0 +1,16 @@
+{
+  "title": "David Way Jr. | Motion Designer",
+  "description": "Motion design portfolio of David Way Jr., motion designer and art director.",
+  "url": "https://dwjmotion.github.io",
+  "links": {
+    "cv": "/",
+    "vimeo": "https://vimeo.com/davidwayjr",
+    "instagram": "https://instagram.com/dwj.motion",
+    "linkedin": "https://www.linkedin.com/in/davidwayjr/",
+    "email": "mailto:davidrwayjr@gmail.com"
+  },
+  "bunny": {
+    "libraryId": "",
+    "cdnHost": ""
+  }
+}

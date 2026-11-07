@@ -1,0 +1,297 @@
+/* DWJ Motion: main stylesheet
+   Layout values are in vw, measured from the Squarespace WIP at 1440px (desktop) and 375px (mobile),
+   so the page scales the same way it did there. */
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("/assets/fonts/space-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ink: #000;
+  --paper: #fff;
+  --placeholder: #d9d9d9;
+  --font: "Space Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+img, video, picture { display: block; max-width: 100%; }
+picture img { width: 100%; height: auto; }
+
+h1, h2, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.placeholder { background: var(--placeholder); }
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  height: 52.01vw;
+  background-color: #1b2a3a;
+  background-image: url("/assets/img/wood-dark-2560.jpg");
+  background-image: image-set(
+    url("/assets/img/wood-dark-2560.avif") type("image/avif"),
+    url("/assets/img/wood-dark-2560.webp") type("image/webp"),
+    url("/assets/img/wood-dark-2560.jpg") type("image/jpeg")
+  );
+  background-size: cover;
+  background-position: center;
+  color: var(--paper);
+}
+
+.hero > picture,
+.hero__logo,
+.hero__note { position: absolute; }
+
+/* Positions are each piece's unrotated box; rotation/scale match the Squarespace build. */
+.hero__name-tag { left: 6.17vw;  top: 13.6vw;  width: 15.69vw; z-index: 2; transform: rotate(-17deg); }
+.hero__david    { left: 13.31vw; top: 17.76vw; width: 17.4vw;  z-index: 3; transform: rotate(5deg); }
+.hero__fortune  { left: 2.03vw;  top: 23.86vw; width: 15.97vw; z-index: 10; transform: rotate(7deg) scale(0.9); }
+
+.hero__logo { left: 36.11vw; top: 9.49vw; width: 27.78vw; z-index: 1; }
+
+.hero__logo-loop {
+  position: absolute;
+  left: -11.13%;
+  top: -6.28%;
+  width: 122.5%;
+  max-width: none;
+  height: auto;
+  opacity: 0;
+}
+
+.hero__logo-paper { position: relative; }
+
+/* Paper note with handwritten links. The paper is rotated; the link words are not. */
+.hero__note { left: 72.1vw; top: 12.28vw; width: 20.33vw; z-index: 4; }
+.hero__note-paper { transform: translate(0.28vw, 0.69vw) rotate(4deg) scale(0.9); }
+.hero__note ul { position: absolute; inset: 0; }
+.hero__note li { position: absolute; left: 9.43%; width: 78.55%; }
+.hero__note a { display: block; transition: transform 0.2s var(--ease); }
+.hero__note a:hover { transform: scale(1.05); }
+.hero__note a:focus-visible { outline-color: #1d3b8f; }
+.note-cv        { top: 15.21%; }
+.note-vimeo     { top: 30.96%; }
+.note-instagram { top: 43.94%; }
+.note-linkedin  { top: 59.53%; }
+.note-email     { top: 76.81%; }
+
+.hero__links { display: none; }
+
+/* Logo hover: paper fades out to reveal the loop, both scale up 5% */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero__logo { transition: transform 0.4s var(--ease); }
+  .hero__logo-paper,
+  .hero__logo-loop { transition: opacity 0.4s var(--ease); }
+  .hero__logo:hover { transform: scale(1.05); }
+  .hero__logo:hover .hero__logo-paper { opacity: 0; }
+  .hero__logo:hover .hero__logo-loop[src] { opacity: 1; }
+}
+
+/* ---------- Project block ---------- */
+
+.project {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 3.26vw 2.01vw;
+  --overlay: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)); /* matches Squarespace's 85% white overlay */
+  background-color: #fff;
+  background-image: var(--overlay), var(--bg-jpg);
+  background-image: var(--overlay), image-set(var(--bg-avif) type("image/avif"), var(--bg-webp) type("image/webp"), var(--bg-jpg) type("image/jpeg"));
+  background-size: cover;
+  background-position: var(--bg-position, center);
+}
+
+.project__main { width: 55.69vw; }
+
+.video {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+}
+.video.placeholder { background: var(--placeholder); }
+
+.video__preview,
+.video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+}
+
+.video__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(6px);
+  color: var(--paper);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.video__play svg { width: 45%; margin-left: 8%; fill: currentColor; }
+.video__play:hover { transform: translate(-50%, -50%) scale(1.08); background: rgba(255, 255, 255, 0.5); }
+
+.project__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2vw;
+  margin-top: 3.4vw;
+}
+
+.project__title {
+  font-weight: 400;
+  font-size: max(24px, 2.69vw);
+  line-height: 1.142;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.project__tags {
+  margin-top: 1.04vw;
+  text-align: right;
+  font-size: max(16px, 1.49vw);
+  line-height: 1.4;
+  letter-spacing: 0.009em;
+}
+
+.project__description {
+  margin-top: 1.53vw;
+  font-size: max(15px, 1.25vw);
+  line-height: 1.4;
+  letter-spacing: 0.011em;
+  text-align: justify;
+}
+.project__description p + p { margin-top: 1em; }
+
+.project__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.97vw;
+  width: 23.4vw;
+}
+
+.media { width: 100%; object-fit: cover; }
+.media img { width: 100%; height: 100%; object-fit: cover; }
+.project__case-study { width: 18.47vw; }
+
+/* ---------- Mobile (simplified) ---------- */
+
+@media (max-width: 767px) {
+  .hero {
+    height: 129.6vw;
+    background-image: url("/assets/img/wood-dark-1280.jpg");
+    background-image: image-set(
+      url("/assets/img/wood-dark-1280.avif") type("image/avif"),
+      url("/assets/img/wood-dark-1280.webp") type("image/webp"),
+      url("/assets/img/wood-dark-1280.jpg") type("image/jpeg")
+    );
+  }
+
+  .hero__name-tag,
+  .hero__fortune,
+  .hero__note,
+  .hero__logo-loop { display: none; }
+
+  .hero__logo  { left: 13.15vw; top: 19.95vw; width: 51.73vw; }
+  .hero__david { left: 39.41vw; top: 45.55vw; width: 43.2vw; transform: rotate(-5deg); }
+
+  .hero__links {
+    position: absolute;
+    left: 6.13vw;
+    right: 5.87vw;
+    bottom: 7.2vw;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 4.79vw;
+    line-height: 1.4;
+    letter-spacing: 0.009em;
+    text-transform: uppercase;
+  }
+  .hero__links ul:last-child { text-align: right; }
+  .hero__links a { text-decoration: none; }
+  .hero__links a:hover { text-decoration: underline; }
+
+  .project {
+    display: block;
+    padding: 6.93vw 0 9.87vw;
+    background-image: var(--overlay), var(--bg-jpg-sm);
+    background-image: var(--overlay), image-set(var(--bg-avif-sm) type("image/avif"), var(--bg-webp-sm) type("image/webp"), var(--bg-jpg-sm) type("image/jpeg"));
+  }
+
+  .project__main { width: auto; }
+
+  .project__heading {
+    display: block;
+    margin-top: 18.4vw;
+    padding: 0 6.13vw;
+  }
+  .project__title { font-size: 7.38vw; }
+  .project__tags  { margin-top: 11.2vw; font-size: 4.79vw; }
+
+  .project__description {
+    margin-top: 5.33vw;
+    padding: 0 6.13vw;
+    font-size: 4.27vw;
+  }
+
+  .project__aside {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5.6vw 2.93vw;
+    width: auto;
+    margin-top: 4.8vw;
+  }
+  .project__still { aspect-ratio: 182 / 199 !important; }
+  .project__case-study {
+    grid-column: 1 / -1;
+    justify-self: end;
+    width: 53.87vw;
+    margin-right: 6.13vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
